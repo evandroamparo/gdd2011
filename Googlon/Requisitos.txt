@@ -1,0 +1,26 @@
+﻿* As letras Googlon são classificadas em dois grupos: as letras c, q, l, g e z são chamadas "letras tipo foo",
+  enquanto que as demais são conhecidas como "letras tipo bar".
+  As preposições em Googlon são as palavras de 3 letras que terminam numa letra tipo bar, mas onde não ocorre a letra k.
+	Existem 69 preposições no texto A.
+  - Obter o número de preposições no texto B.
+
+* Os verbos sempre são palavras de 6 ou mais letras que terminam numa letra tipo foo. Além disso, se um verbo começa
+  com uma letra tipo bar, o verbo está em primeira pessoa.
+	No texto A existem 82 verbos, dos quais 62 estão em primeira pessoa.
+	- Obter o número de verbos no texto B;
+	- Obter o número de verbos em primeira pessoa no texto B;
+
+* Criar uma lista de vocabulário para cada texto, isto é, uma lista ordenada (e sem repetições) das palavras que
+  aparecem em cada um dos textos.
+	A ordem das letras no alfabeto é sjxchqlvpdnkfbmgzwrt.
+	- Dada a lista de vocabulário do texto A, obter a lista de vocabulário do texto B.
+
+* As palavras também são números dados em base 20, onde cada letra é um dígito, e os dígitos são ordenados do menos
+  significativo para o mais significativo (o inverso do nosso sistema). Ou seja, a primeira posição é a unidade, a
+	segunda posição vale 20, a terceira vale 400, e assim por diante.
+	A palavra tlz tem o valor numérico de 6539.
+	Um número bonito:
+	  • é maior ou igual a 946916
+    • é divisível por 3
+	No texto A existem 115 números bonitos DISTINTOS.
+	- Obter a quantidade de números bonitos DISTINTOS no texto B.
