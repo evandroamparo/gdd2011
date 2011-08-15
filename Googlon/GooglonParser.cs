@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Googlon
@@ -9,6 +9,8 @@ namespace Googlon
     public string Texto { get; set; }
 
     private const string LetrasFoo = "cqlgz";
+
+    public const string OrdemAlfabetica = "sjxchqlvpdnkfbmgzwrt";
 
     private static bool EhPreposicao(string palavra)
     {
@@ -25,7 +27,7 @@ namespace Googlon
 
     private static bool EhVerboPrimeiraPessoa(string palavra)
     {
-      return EhVerbo(palavra) && 
+      return EhVerbo(palavra) &&
              !LetrasFoo.Contains(palavra[0]);
     }
 
@@ -57,26 +59,29 @@ namespace Googlon
       }
     }
 
-    public string CriaListaVocabulario()
+    public string ListaVocabulario
     {
-      var palavras = Texto.Split(' ');
-      var palavrasSemRepeticao = new SortedList();
-      StringBuilder sbVocabulario = new StringBuilder();
-
-      foreach (var palavra in palavras)
+      get
       {
-        if (!palavrasSemRepeticao.ContainsKey(palavra))
+        var palavras = Texto.Split(' ');
+        var palavrasSemRepeticao = new List<string>();
+
+        foreach (var palavra in palavras)
         {
-          palavrasSemRepeticao.Add(palavra, null);
+          if (palavrasSemRepeticao.IndexOf(palavra) == -1)
+          {
+            palavrasSemRepeticao.Add(palavra);
+          }
         }
-      }
 
-      foreach (var palavra in palavrasSemRepeticao)
-      {
-        sbVocabulario.AppendFormat("{0} ", palavra.ToString());
+        var palavrasOrdenadas = palavrasSemRepeticao.OrderBy(current => current, new GooglonComparer());
+        var sbVocabulario = new StringBuilder();
+        foreach (var palavra in palavrasOrdenadas)
+        {
+          sbVocabulario.AppendFormat("{0} ", palavra);
+        }
+        return sbVocabulario.ToString();
       }
-
-      return sbVocabulario.ToString();
     }
   }
 }
