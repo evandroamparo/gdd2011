@@ -7,11 +7,27 @@ namespace Googlon
 {
   public class GooglonParser
   {
-    public string Texto { get; set; }
+    public GooglonParser(string texto)
+    {
+      this.Texto = texto;
+    }
+
+    private string[] _palavras;
+
+    private string _texto;
+    public string Texto
+    {
+      get { return _texto; }
+      set
+      {
+        _texto = value;
+        _palavras = Texto.Split(' ');
+      }
+    }
 
     private const string LetrasFoo = "cqlgz";
 
-    public const string OrdemAlfabetica = "sjxchqlvpdnkfbmgzwrt";
+    private const string AlfabetoOrdenado = "sjxchqlvpdnkfbmgzwrt";
 
     private static bool EhPreposicao(string palavra)
     {
@@ -36,8 +52,7 @@ namespace Googlon
     {
       get
       {
-        var palavras = Texto.Split(' ');
-        return palavras.Count(
+        return _palavras.Count(
             EhPreposicao);
       }
     }
@@ -46,8 +61,7 @@ namespace Googlon
     {
       get
       {
-        var palavras = Texto.Split(' ');
-        return palavras.Count(EhVerbo);
+        return _palavras.Count(EhVerbo);
       }
     }
 
@@ -55,8 +69,7 @@ namespace Googlon
     {
       get
       {
-        var palavras = Texto.Split(' ');
-        return palavras.Count(EhVerboPrimeiraPessoa);
+        return _palavras.Count(EhVerboPrimeiraPessoa);
       }
     }
 
@@ -64,18 +77,17 @@ namespace Googlon
     {
       get
       {
-        var palavras = Texto.Split(' ');
         var palavrasSemRepeticao = new List<string>();
 
-        foreach (var palavra in palavras)
+        foreach (var palavra in _palavras)
         {
-          if (palavrasSemRepeticao.IndexOf(palavra) == -1)
+          if (!palavrasSemRepeticao.Contains(palavra))
           {
             palavrasSemRepeticao.Add(palavra);
           }
         }
 
-        var palavrasOrdenadas = palavrasSemRepeticao.OrderBy(current => current, new GooglonComparer());
+        var palavrasOrdenadas = palavrasSemRepeticao.OrderBy(current => current, new GooglonComparer(AlfabetoOrdenado));
         var sbVocabulario = new StringBuilder();
         foreach (var palavra in palavrasOrdenadas)
         {
@@ -89,10 +101,9 @@ namespace Googlon
     {
       get
       {
-        var palavras = Texto.Split(' ');
         var numeros = new List<long>();
 
-        foreach (var palavra in palavras)
+        foreach (var palavra in _palavras)
         {
           numeros.Add(PalavraParaNumero(palavra));
         }
@@ -123,7 +134,7 @@ namespace Googlon
 
       for (int i = 0; i < palavra.Length; i++)
       {
-        var digito = OrdemAlfabetica.IndexOf(palavra[i]);
+        var digito = AlfabetoOrdenado.IndexOf(palavra[i]);
         var valorLetra = (long) Math.Pow(20, i);
         numero += digito * valorLetra;
       }
